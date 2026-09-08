@@ -50,3 +50,97 @@ secure-web-app/
 ├── .env.example        # Template for environment variables
 ├── .gitignore          # Rules for ignoring venv, databases, and secrets
 └── README.md           # Project documentation
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+* Python 3.8+ installed on your system.
+
+### 1. Installation & Environment Setup
+
+Clone the repository and checkout the `flask-backend` branch:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/secure-web-app.git
+cd secure-web-app
+git checkout flask-backend
+```
+
+Create and activate a virtual environment:
+
+* **Windows (CMD):**
+  ```cmd
+  python -m venv venv
+  venv\Scripts\activate
+  ```
+* **macOS / Linux:**
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+
+Install required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Environment Configuration
+
+Create a `.env` file in the root directory:
+
+```env
+JWT_SECRET=super_secret_key_that_is_at_least_32_bytes_long_123456
+```
+
+---
+
+## 🏃 Running the Application
+
+Start the Flask development server:
+
+```bash
+python app.py
+```
+
+The API will run locally at `http://127.0.0.1:5000`.
+
+---
+
+## 📡 API Endpoints Summary
+
+| Method | Endpoint | Access Level | Description |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/` | Public | API health check status |
+| `POST` | `/register` | Public | Register a new user (`username`, `password`, `role`) |
+| `POST` | `/login` | Public (Rate Limited) | Authenticate user & receive JWT token |
+| `GET` | `/profile` | Authenticated | Fetch current user profile (Requires `Bearer <token>`) |
+| `GET` | `/admin` | Admin Only | Access restricted admin dashboard |
+
+---
+
+## 🧪 Testing the API
+
+An automated test script `test_api.py` is included to verify the registration, login, and token authorization pipeline.
+
+While `app.py` is running in one terminal, open a second terminal and execute:
+
+```bash
+python test_api.py
+```
+
+**Expected Output:**
+```text
+✓ Login successful. Token received.
+Profile Response: {
+  "message": "Access granted to protected route",
+  "user": {
+    "id": "1",
+    "role": "user",
+    "username": "testuser"
+  }
+}
+```
